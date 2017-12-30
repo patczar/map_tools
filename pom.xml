@@ -7,4 +7,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Map Tools - parent project</name>
+	<modules>
+		<module>map_tools</module>
+	</modules>
 </project>
