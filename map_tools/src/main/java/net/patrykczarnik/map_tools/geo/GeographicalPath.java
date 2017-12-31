@@ -26,6 +26,13 @@ public class GeographicalPath implements Iterable<GeographicalCoordinates> {
 		fPoints = aPoints;
 	}
 	
+	/** Creates an empty path.
+	 * @return a fresh GeographicalPath object with no points
+	 */
+	public static GeographicalPath empty() {
+		return new GeographicalPath();
+	}
+
 	/** Creates a path with the given points.
 	 * @param aPoints a collection of points which the created path will initially contain;
 	 * 	this collection is not modified and the reference in not remembered, so it can be safely used afterwards 

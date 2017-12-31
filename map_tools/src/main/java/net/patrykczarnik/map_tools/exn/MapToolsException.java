@@ -6,18 +6,20 @@ package net.patrykczarnik.map_tools.exn;
  * The base class for all custom exceptions.
  */
 public class MapToolsException extends Exception {
+
 	public MapToolsException() {
+		super();
 	}
 
-	public MapToolsException(String message) {
-		super(message);
+	public MapToolsException(String aMessage, Throwable aCause) {
+		super(aMessage, aCause);
 	}
 
-	public MapToolsException(Throwable cause) {
-		super(cause);
+	public MapToolsException(String aMessage) {
+		super(aMessage);
 	}
 
-	public MapToolsException(String message, Throwable cause) {
-		super(message, cause);
+	public MapToolsException(Throwable aCause) {
+		super(aCause);
 	}
 }
