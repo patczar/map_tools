@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.patrykczarnik.map_tools.geo;
 
 import net.patrykczarnik.map_tools.utils.MathUtils;
@@ -43,6 +40,15 @@ public class GeographicalCoordinates {
 		return new GeographicalCoordinates(aLatitude, aLongitude);
 	}
 	
+	/** Creates an object from coordinates given in radians.
+	 * @param aLatitude the latitude in radians; must be between -Π/2 and +Π/2
+	 * @param aLongitude the longitude in radians; the value will be converted into the standard interval
+	 * @throws IllegalArgumentException when aLatitude is out of the proper interval
+	 */
+	public static GeographicalCoordinates ofRadians(double aLatitude, double aLongitude) throws IllegalArgumentException {
+		return ofDegrees(Math.toDegrees(aLatitude), Math.toDegrees(aLongitude));
+	}
+	
 	/**
 	 * @return the latitude in degrees
 	 */
@@ -55,6 +61,25 @@ public class GeographicalCoordinates {
 	 */
 	public final double getLongitude() {
 		return fLongitude;
+	}
+	
+	/**
+	 * @return the latitude in radians
+	 */
+	public final double getLatitudeRadians() {
+		return Math.toRadians(fLatitude);
+	}
+
+	/**
+	 * @return the longitude in radians
+	 */
+	public final double getLongitudeRadians() {
+		return Math.toRadians(fLongitude);
+	}
+	
+	@Override
+	public String toString() {
+		return "[" + fLatitude + "," + fLongitude + "]";
 	}
 	
 	@Override

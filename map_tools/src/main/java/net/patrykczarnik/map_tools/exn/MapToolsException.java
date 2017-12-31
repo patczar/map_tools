@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.patrykczarnik.map_tools.exn;
 
 /**
