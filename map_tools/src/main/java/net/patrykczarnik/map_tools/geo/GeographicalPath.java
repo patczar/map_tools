@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -12,7 +13,7 @@ import java.util.NoSuchElementException;
  * A path is an ordered sequence of points (GeographicalCoordinates).
  * For example, a GPS track without altitude or speed information nor any metadata can be represented as a GeographicalPath.
  */
-public class GeographicalPath {
+public class GeographicalPath implements Iterable<GeographicalCoordinates> {
 	private final LinkedList<GeographicalCoordinates> fPoints;
 	
 	/** Creates an empty path. */
@@ -76,9 +77,8 @@ public class GeographicalPath {
 	 */
 	public GeographicalCoordinates getAverage() {
 		double sumLat = 0.0, sumLon = 0.0;
-		int count = 0;
+		final int count = fPoints.size();
 		for(GeographicalCoordinates point : fPoints) {
-			count++;
 			sumLat += point.getLatitude();
 			sumLon += point.getLongitude();
 		}
@@ -102,5 +102,12 @@ public class GeographicalPath {
 	@Override
 	public String toString() {
 		return fPoints.toString();
+	}
+
+	/** Returns a read-only iterator over the list of points.
+	 * @see java.lang.Iterable#iterator()
+	 */
+	public ListIterator<GeographicalCoordinates> iterator() {
+		return this.getPoints().listIterator();
 	}
 }
