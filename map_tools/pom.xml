@@ -9,4 +9,18 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</parent>
 	<artifactId>map_tools</artifactId>
 	<name>Map Tools - main library project</name>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.assertj</groupId>
+		    <artifactId>assertj-core</artifactId>
+		    <version>3.8.0</version>
+		    <scope>test</scope>
+		</dependency>		
+	</dependencies>
 </project>
