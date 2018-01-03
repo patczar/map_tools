@@ -19,7 +19,7 @@ public final class MercatorProjection {
 	 * @return the vertical coordinate in Mercator projection, between -INF and +INF (extreme values for the poles)
 	 */
 	public static double projectLatitude(double aLatitudeRad) {
-		return Math.log(Math.tan(Math.PI/4.0 + aLatitudeRad/2.0));
+		return Math.log(Math.tan(Math.PI/4.0 + aLatitudeRad/2.0)) / Math.PI;
 	}
 	
 	/** Converts the longitude expressed in radians to the horizontal coordinate in Mercator projection.
