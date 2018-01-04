@@ -8,6 +8,11 @@ import org.junit.Test;
 public class MercatorProjectionTest {
 
 	@Test
+	public void testLatitudeRange() {
+		assertThat(MercatorProjection.LATITUDE_RANGE_DEGREES).isCloseTo(85.05113, offset(1E-4));
+	}
+	
+	@Test
 	public void testProjectLatitude0() {
 		final double result = MercatorProjection.projectLatitude(0.0);
 		assertThat(result).isCloseTo(0.0, offset(1E-6));
@@ -15,14 +20,14 @@ public class MercatorProjectionTest {
 
 	@Test
 	public void testProjectLatitude1() {
-		final double result = MercatorProjection.projectLatitude(Math.toRadians(85.0));
-		assertThat(result).isCloseTo(1.0, offset(0.1));
+		final double result = MercatorProjection.projectLatitude(MercatorProjection.LATITUDE_RANGE_RADIANS);
+		assertThat(result).isCloseTo(1.0, offset(1E-6));
 	}
 
 	@Test
 	public void testProjectLatitudeM1() {
-		final double result = MercatorProjection.projectLatitude(Math.toRadians(-85.0));
-		assertThat(result).isCloseTo(-1.0, offset(0.1));
+		final double result = MercatorProjection.projectLatitude(-MercatorProjection.LATITUDE_RANGE_RADIANS);
+		assertThat(result).isCloseTo(-1.0, offset(1E-6));
 	}
 
 	@Test

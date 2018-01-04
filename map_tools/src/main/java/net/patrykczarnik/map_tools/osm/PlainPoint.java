@@ -7,6 +7,7 @@ package net.patrykczarnik.map_tools.osm;
  * It can be also used to represent a vector.
  *
  * The values are not restricted in any way and the scale is not determined.
+ * 
  * Ths class in immutable. The fields are consciously left public to simplify the usage and enhance the performance.
  */
 public class PlainPoint {
@@ -25,7 +26,7 @@ public class PlainPoint {
 	/** Returns the result of moving this point by given coordinates.
 	 * @return a fresh PlainPoint object; never null
 	 */
-	public PlainPoint moved(double aVerticalMove, double aHorizontalMove) {
+	public PlainPoint moved(double aHorizontalMove, double aVerticalMove) {
 		return new PlainPoint(this.x + aHorizontalMove, this.y + aVerticalMove);
 	}
 
