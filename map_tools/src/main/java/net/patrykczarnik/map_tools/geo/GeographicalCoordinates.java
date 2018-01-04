@@ -110,12 +110,12 @@ public class GeographicalCoordinates {
 		return true;
 	}
 
-	/** Normalize the given value to the standard longitude interval: from -180.0 (inclusive) to +180.0 (exclusive).
+	/** Normalize the given value to the standard longitude interval: from -180.0 to +180.0 (inclusive on both sides? - to think on that...).
 	 * @param aLongitude any value in degrees
 	 * @return the normalized value
 	 */
 	public static double normalizeLongitude(double aLongitude) {
-		if(aLongitude >= -180.0 && aLongitude < 180.0) {
+		if(aLongitude >= -180.0 && aLongitude <= 180.0) {
 			return aLongitude;
 		}
 		return (aLongitude + 180.0) % 360.0 - 180.0;

@@ -53,8 +53,8 @@ public final class MercatorProjection {
 	 * @return a fresh PlainPoint, never null
 	 */
 	public static PlainPoint projectPoint(GeographicalCoordinates aCoords) {
-		return new PlainPoint(projectLongitude(aCoords.getLongitude()),
-					projectLatitude(aCoords.getLatitude()));
+		return new PlainPoint(projectLongitude(aCoords.getLongitudeRadians()),
+					projectLatitude(aCoords.getLatitudeRadians()));
 	}
 
 	/** Converts a point on sphere given in geographical coordinates into a plain point
@@ -68,8 +68,8 @@ public final class MercatorProjection {
 	public static PlainPoint projectPoint01(GeographicalCoordinates aCoords) throws IllegalArgumentException {
 		MathUtils.checkArgBetween(aCoords.getLatitude(), -LATITUDE_RANGE_DEGREES, LATITUDE_RANGE_DEGREES,
 					"Latitude value " + aCoords.getLatitude() + " exceeds the allowed interval for map projection");
-		MathUtils.checkArgBetween(aCoords.getLatitudeRadians(), -180.0, 180.0,
-				"Latitude value " + aCoords.getLatitude() + " exceeds the allowed interval for map projection");
+		MathUtils.checkArgBetween(aCoords.getLongitude(), -180.0, 180.0,
+				"Invalid longitude value " + aCoords.getLongitude());
 		return projectPoint(aCoords);
 	}
 }
