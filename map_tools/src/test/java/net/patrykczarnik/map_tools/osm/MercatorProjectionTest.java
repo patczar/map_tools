@@ -72,4 +72,10 @@ public class MercatorProjectionTest {
 		assertThat(point.y).isLessThanOrEqualTo(1.0)
 			.isCloseTo(1.0, offset(1E-9));
 	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void testProjectPointInvalid() {
+		final GeographicalCoordinates coords = GeographicalCoordinates.ofDegrees(88.0, 90.0);
+		MercatorProjection.projectPoint01(coords);
+	}
 }
