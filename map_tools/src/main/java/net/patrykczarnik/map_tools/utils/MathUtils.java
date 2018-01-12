@@ -29,5 +29,5 @@ public final class MathUtils {
 		if(aArgument < aMin || aArgument > aMax) {
 			throw new IllegalArgumentException(aMessage);
 		}
-	}
+	}	
 }

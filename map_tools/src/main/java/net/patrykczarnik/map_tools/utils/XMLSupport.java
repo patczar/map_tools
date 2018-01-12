@@ -17,7 +17,7 @@ import org.xml.sax.XMLReader;
  * A utility class with support for XML.
  */
 public final class XMLSupport {
-	/** This class is not to be instantited. */
+	/** This class is not to be instantiated. */
 	private XMLSupport() {
 	}
 
