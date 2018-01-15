@@ -10,23 +10,21 @@ public final class OSMConstants {
 	private OSMConstants() {
 	}
 	
-	
+	/** The number of bits for pixel coordinates in the maximum supported scale. */
+	static final int PIXELS_OF_WORLD_BITS = 31;
+
+	/** The number of bits which store the pixel coordinate within a tile. */
+	static final int PIXELS_OF_TILE_BITS = 8;
+
+	/** The number of pixels a tile consists of, in each dimension. */
+	static final int PIXELS_OF_TILE = 1 << PIXELS_OF_TILE_BITS; // 256
+
 	/** Maximum scale of the map.
 	 * 
 	 * Note that this is not the limit of the real map engine (different maps have different scales), but rather the limit of this library.
+	 * 
+	 * Implementation note: the number is chosen so that MAX_SCALE + PIXELS_OF_TILE_BITS = 31, to leverage the size of int.
+	 * The real maximum scale of openstreetmap.org is 19.
 	 */
-	public static final int MAX_SCALE = 30;
-
-	/** The number of pixels a tile consists of, in each dimension. */
-	static final int PIXELS_OF_TILE = 256;
-
-	/** The number of pixels a tile consists of horizontally.
-	    To ease a possible change in future, the other code should refer to this constant rather than PIXELS_OF_TILE. */
-	public static final int PIXELS_OF_TILE_X = PIXELS_OF_TILE;
-
-	/** The number of pixels a tile consists of vertically.
-    To ease a possible change in future, the other code should refer to this constant rather than PIXELS_OF_TILE. */
-	public static final int PIXELS_OF_TILE_Y = PIXELS_OF_TILE;
-	
-	
+	public static final int MAX_SCALE = 31 - PIXELS_OF_TILE_BITS; // 23
 }
