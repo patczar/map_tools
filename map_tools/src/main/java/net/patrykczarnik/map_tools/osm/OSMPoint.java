@@ -4,6 +4,8 @@ import net.patrykczarnik.map_tools.utils.MathUtils;
 
 import static net.patrykczarnik.map_tools.osm.OSMConstants.*;
 
+import net.patrykczarnik.map_tools.graphic.PixelCoordinates;
+
 /**
  * @author Patryk Czarnik <patryk@patrykczarnik.net>
  *
@@ -35,8 +37,42 @@ public class OSMPoint {
 	 * @return an OSMTile object describing the map tile this point belongs to
 	 */
 	public OSMTile getTile(int aScale) {
-		final int tileX = x >> (PIXELS_OF_TILE_BITS + MAX_SCALE - aScale);
-		final int tileY = y >> (PIXELS_OF_TILE_BITS + MAX_SCALE - aScale);
+		final int shift = PIXELS_OF_TILE_BITS + MAX_SCALE - aScale;
+		final int tileX = x >> shift;
+		final int tileY = y >> shift;
 		return OSMTile.ofCoordinates(aScale, tileX, tileY);
+	}
+	
+	/** Returns the coordinates of this point as a pixel within the tile in the given scale.
+	 * @param aScale
+	 * @return
+	 */
+	public PixelCoordinates getCoordinatesWithinTile(int aScale) {
+		final int shift = MAX_SCALE - aScale;
+		final int mask = PIXELS_OF_TILE - 1; // is ~ more efficient?
+		final int pixelX = mask & (x >> shift);
+		final int pixelY = mask & (y >> shift);
+		return PixelCoordinates.of(pixelX, pixelY);
+	}
+
+	@Override
+	public int hashCode() {
+		return x ^ (y >> 16 | y << 16);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OSMPoint other = (OSMPoint) obj;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		return true;
 	}
 }
