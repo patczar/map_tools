@@ -42,8 +42,8 @@ public class OSMPoint {
 	public static OSMPoint of01Point(double x, double y) {
 		MathUtils.checkArgBetweenCO(x, 0.0, 1.0, "OSMPoint x value out of 01 range " + x);
 		MathUtils.checkArgBetweenCO(y, 0.0, 1.0, "OSMPoint y value out of 01 range " + y);
-		int ix = (int)Math.floor(x * PIXELS_OF_WORLD);
-		int iy = (int)Math.floor(y * PIXELS_OF_WORLD);
+		int ix = (int) Math.scalb(x, PIXELS_OF_WORLD_BITS);
+		int iy = (int) Math.scalb(y, PIXELS_OF_WORLD_BITS);
 		return new OSMPoint(ix, iy);
 	}
 	

@@ -65,7 +65,8 @@ public class MercatorProjectionTest {
 
 	@Test
 	public void testProjectPointExtreme() {
-		final GeographicalCoordinates coords = GeographicalCoordinates.ofDegrees(MercatorProjection.LATITUDE_RANGE_DEGREES, 180.0);
+		double lat = Math.nextDown(MercatorProjection.LATITUDE_RANGE_DEGREES);
+		final GeographicalCoordinates coords = GeographicalCoordinates.ofDegrees(lat, 180.0);
 		final PlainPoint point = MercatorProjection.projectPoint01(coords);
 		assertThat(point).isNotNull();
 		assertThat(point.x).isCloseTo(1.0, offset(1E-6));
