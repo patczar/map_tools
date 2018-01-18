@@ -31,6 +31,55 @@ public class OSMPoint {
 		MathUtils.checkArgNonNegative(y, "OSMPoint y negative " + y);
 		return new OSMPoint(x, y);
 	}
+	
+	/** Creates an OSMPoint of fractional coordinates scaled in the range of [0,1] in each dimension.
+	 * (0,0) is the top left corder of the whole map, (1,1) is the bottom right corner
+	 * @param x the horizontal coordinate; a number between 0.0 (inclusive) and 1.0 (exclusive)
+	 * @param y the vertical coordinate; a number between 0.0 (inclusive) and 1.0 (exclusive)
+	 * @return a fresh object, never null
+	 * @throws IllegalArgumentException if any argument is out of the range
+	 */
+	public static OSMPoint of01Point(double x, double y) {
+		MathUtils.checkArgBetweenCO(x, 0.0, 1.0, "OSMPoint x value out of 01 range " + x);
+		MathUtils.checkArgBetweenCO(y, 0.0, 1.0, "OSMPoint y value out of 01 range " + y);
+		int ix = (int)Math.floor(x * PIXELS_OF_WORLD);
+		int iy = (int)Math.floor(y * PIXELS_OF_WORLD);
+		return new OSMPoint(ix, iy);
+	}
+	
+	/** Creates an OSMPoint of fractional coordinates scaled in the range of [0,1] in each dimension.
+	 * (0,0) is the top left corder of the whole map, (1,1) is the bottom right corner
+	 * @param aPoint a plain point scaled in 0(inclusive) - 1(exclusive) range 
+	 * @return a fresh object, never null
+	 * @throws IllegalArgumentException if any argument is out of the range
+	 */
+	public static OSMPoint of01Point(PlainPoint aPoint) {
+		return of01Point(aPoint.x, aPoint.y);
+	}
+	
+	/** Creates an OSMPoint of fractional coordinates scaled in the range of [-1, +1] in each dimension.
+	 * (0,0) is the center of the whole map
+	 * @param x the horizontal coordinate; a number between -1.0 and +1.0 (exclusive)
+	 * @param y the vertical coordinate; a number between  -1.0 and +1.0 (exclusive)
+	 * @return a fresh object, never null
+	 * @throws IllegalArgumentException if any argument is out of the range
+	 */
+	public static OSMPoint ofCenteredPoint(double x, double y) {
+		x = (x + 1.0) / 2.0;
+		y = (y + 1.0) / 2.0;
+		return of01Point(x, y);
+	}
+	
+	/** Creates an OSMPoint of fractional coordinates scaled in the range of [0,1] in each dimension.
+	 * (0,0) is the top left corder of the whole map, (1,1) is the bottom right corner
+	 * @param aPoint a plain point scaled in 0(inclusive) - 1(exclusive) range 
+	 * @return a fresh object, never null
+	 * @throws IllegalArgumentException if any argument is out of the range
+	 */
+	public static OSMPoint ofCenteredPoint(PlainPoint aPoint) {
+		return ofCenteredPoint(aPoint.x, aPoint.y);
+	}
+
 	/** Returns the tile which the point belongs to.
 	 * @param aScale the requested scale od the tile
 	 * @return an OSMTile object describing the map tile this point belongs to
@@ -73,5 +122,10 @@ public class OSMPoint {
 		if (y != other.y)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "OSMPoint ("+ x +","+ y +")";
 	}
 }
