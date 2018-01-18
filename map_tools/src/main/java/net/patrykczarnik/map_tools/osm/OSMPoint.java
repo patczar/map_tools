@@ -31,7 +31,6 @@ public class OSMPoint {
 		MathUtils.checkArgNonNegative(y, "OSMPoint y negative " + y);
 		return new OSMPoint(x, y);
 	}
-	
 	/** Returns the tile which the point belongs to.
 	 * @param aScale the requested scale od the tile
 	 * @return an OSMTile object describing the map tile this point belongs to

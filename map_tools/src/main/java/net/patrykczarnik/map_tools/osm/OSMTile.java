@@ -27,12 +27,15 @@ public class OSMTile {
 	 * @throws IllegalArgumentException if scale is negative or x/y are out of the proper interval
 	 */
 	public static OSMTile ofCoordinates(int aScale, int x, int y) {
-		MathUtils.checkArgBetweenInclusive(aScale, 0, OSMConstants.MAX_SCALE, "incorrect scale " + aScale);
+		MathUtils.checkArgBetweenCC(aScale, 0, OSMConstants.MAX_SCALE, "incorrect scale " + aScale);
 		final int max = (1 << aScale) - 1;
-		MathUtils.checkArgBetweenInclusive(x, 0, max, "x (" + x + ") out of proper interval for the given scale");
-		MathUtils.checkArgBetweenInclusive(y, 0, max, "y (" + y + ") out of proper interval for the given scale");
+		MathUtils.checkArgBetweenCC(x, 0, max, "x (" + x + ") out of proper interval for the given scale");
+		MathUtils.checkArgBetweenCC(y, 0, max, "y (" + y + ") out of proper interval for the given scale");
 		return new OSMTile(aScale, x, y);
 	}
 	
-
+	@Override
+	public String toString() {
+		return "OSMTile scale="+scale+", point=(" + x +","+ y +")";
+	}
 }

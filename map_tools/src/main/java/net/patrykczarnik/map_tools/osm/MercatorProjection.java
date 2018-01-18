@@ -14,7 +14,7 @@ public final class MercatorProjection {
 	}
 	
 	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. */
-	public static final double LATITUDE_RANGE_RADIANS =	Math.nextDown(Math.atan(Math.sinh(Math.PI)));
+	public static final double LATITUDE_RANGE_RADIANS =	Math.atan(Math.sinh(Math.PI));
 
 	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. */
 	public static final double LATITUDE_RANGE_DEGREES = Math.nextDown(Math.toDegrees(LATITUDE_RANGE_RADIANS));
@@ -66,9 +66,9 @@ public final class MercatorProjection {
 	 * 		in particular when the absolute value of latitude is greater than {@link #LATITUDE_RANGE_DEGREES} (about 85°)
 	 */
 	public static PlainPoint projectPoint01(GeographicalCoordinates aCoords) throws IllegalArgumentException {
-		MathUtils.checkArgBetween(aCoords.getLatitude(), -LATITUDE_RANGE_DEGREES, LATITUDE_RANGE_DEGREES,
+		MathUtils.checkArgBetweenOO(aCoords.getLatitude(), -LATITUDE_RANGE_DEGREES, LATITUDE_RANGE_DEGREES,
 					"Latitude value " + aCoords.getLatitude() + " exceeds the allowed interval for map projection");
-		MathUtils.checkArgBetween(aCoords.getLongitude(), -180.0, 180.0,
+		MathUtils.checkArgBetweenCC(aCoords.getLongitude(), -180.0, 180.0,
 				"Invalid longitude value " + aCoords.getLongitude());
 		return projectPoint(aCoords);
 	}

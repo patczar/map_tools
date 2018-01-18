@@ -11,31 +11,67 @@ public final class MathUtils {
 	private MathUtils() {
 	}
 	
-	/** Chcecks whether the argument fits between the two given numbers, exclusive on both sides.
+	/** Checks whether the argument fits between the two given numbers.
+	 * The range is open (exclusive) on both sides.
 	 * If yes, nothing happens.
 	 * If no, then an IllegalArgumentException is thrown.
 	 */
-	public static void checkArgBetween(int aArgument, int aMin, int aMax, String aMessage) throws IllegalArgumentException {
+	public static void checkArgBetweenOO(int aArgument, int aMin, int aMax, String aMessage) throws IllegalArgumentException {
 		if(aArgument <= aMin || aArgument >= aMax) {
 			throw new IllegalArgumentException(aMessage);
 		}
 	}
 
-	/** Chcecks whether the argument fits between the two given numbers, inclusive on both sides.
+	/** Checks whether the argument fits between the two given numbers.
+	 * The range is open (exclusive) on both sides.
 	 * If yes, nothing happens.
 	 * If no, then an IllegalArgumentException is thrown.
 	 */
-	public static void checkArgBetweenInclusive(int aArgument, int aMin, int aMax, String aMessage) throws IllegalArgumentException {
+	public static void checkArgBetweenOO(double aArgument, double aMin, double aMax, String aMessage) throws IllegalArgumentException {
+		if(aArgument <= aMin || aArgument >= aMax) {
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
+
+	/** Checks whether the argument fits between the two given numbers.
+	 * The range is closed (inclusive) on the left (lower) side, and open (exclusive) on the right (greater) side.
+	 * If yes, nothing happens.
+	 * If no, then an IllegalArgumentException is thrown.
+	 */
+	public static void checkArgBetweenCO(int aArgument, int aMin, int aMax, String aMessage) throws IllegalArgumentException {
+		if(aArgument < aMin || aArgument >= aMax) {
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
+
+	/** Checks whether the argument fits between the two given numbers.
+	 * The range is closed (inclusive) on the left (lower) side, and open (exclusive) on the right (greater) side.
+	 * If yes, nothing happens.
+	 * If no, then an IllegalArgumentException is thrown.
+	 */
+	public static void checkArgBetweenCO(double aArgument, double aMin, double aMax, String aMessage) throws IllegalArgumentException {
+		if(aArgument < aMin || aArgument >= aMax) {
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
+
+	/** Checks whether the argument fits between the two given numbers.
+	 * The range is closed (inclusive) on both sides.
+	 * If yes, nothing happens.
+	 * If no, then an IllegalArgumentException is thrown.
+	 */
+	public static void checkArgBetweenCC(int aArgument, int aMin, int aMax, String aMessage) throws IllegalArgumentException {
 		if(aArgument < aMin || aArgument > aMax) {
 			throw new IllegalArgumentException(aMessage);
 		}
 	}
 	
-	/** Chcecks whether the argument fits between the two given numbers, inclusive on both sides.
+	/** Checks whether the argument fits between the two given numbers.
+	 * The range is closed (inclusive) on both sides.
 	 * If yes, nothing happens.
 	 * If no, then an IllegalArgumentException is thrown.
 	 */
-	public static void checkArgBetween(double aArgument, double aMin, double aMax, String aMessage) throws IllegalArgumentException {
+	public static void checkArgBetweenCC(double aArgument, double aMin, double aMax, String aMessage) throws IllegalArgumentException {
 		if(aArgument < aMin || aArgument > aMax) {
 			throw new IllegalArgumentException(aMessage);
 		}

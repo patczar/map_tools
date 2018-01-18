@@ -35,7 +35,7 @@ public class GeographicalCoordinates {
 	 * @throws IllegalArgumentException when aLatitude is out of the proper interval
 	 */
 	public static GeographicalCoordinates ofDegrees(double aLatitude, double aLongitude) throws IllegalArgumentException {
-		MathUtils.checkArgBetween(aLatitude, -90.0, 90.0, "Invalid latitude: " + aLatitude);
+		MathUtils.checkArgBetweenCC(aLatitude, -90.0, 90.0, "Invalid latitude: " + aLatitude);
 		aLongitude = normalizeLongitude(aLongitude);
 		return new GeographicalCoordinates(aLatitude, aLongitude);
 	}
