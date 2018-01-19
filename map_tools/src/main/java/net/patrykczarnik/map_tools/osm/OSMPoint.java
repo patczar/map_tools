@@ -91,6 +91,17 @@ public class OSMPoint {
 		return OSMTile.ofCoordinates(aScale, tileX, tileY);
 	}
 	
+	/** Returns the absolute coordinates of this point within the whole world map in the given scale.
+	 * @param aScale
+	 * @return
+	 */
+	public PixelCoordinates getAbsoluteCoordinates(int aScale) {
+		final int shift = MAX_SCALE - aScale;
+		final int pixelX = x >> shift;
+		final int pixelY = y >> shift;
+		return PixelCoordinates.of(pixelX, pixelY);
+	}
+
 	/** Returns the coordinates of this point as a pixel within the tile in the given scale.
 	 * @param aScale
 	 * @return
@@ -101,6 +112,16 @@ public class OSMPoint {
 		final int pixelX = mask & (x >> shift);
 		final int pixelY = mask & (y >> shift);
 		return PixelCoordinates.of(pixelX, pixelY);
+	}
+
+	/** Returns the coordinates of this point as a pixel within the tile in the given scale.
+	 * @param aScale
+	 * @return
+	 */
+	public PixelCoordinates getCoordinatesRelativeToTile(OSMTile aTile) {
+		PixelCoordinates tileCoord = aTile.getAbsoluteCoordinates();
+		PixelCoordinates thisCoord = this.getAbsoluteCoordinates(aTile.scale);
+		return thisCoord.relativize(tileCoord);
 	}
 
 	@Override

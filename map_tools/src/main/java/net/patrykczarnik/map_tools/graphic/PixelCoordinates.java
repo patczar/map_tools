@@ -51,4 +51,13 @@ public class PixelCoordinates {
 		return true;
 	}
 
+	/** Returns the coordinates of this object relative to the parameter.
+	 * This operation can also be understood as subtraction of pixel coordinates.
+	 * @param aOther 
+	 * @return a fresh {@link PixelCoordinates} object, never null; note that the returned object may contain negative coordinates
+	 */
+	public PixelCoordinates relativize(PixelCoordinates aOther) {
+		return new PixelCoordinates(this.x - aOther.x, this.y - aOther.y);
+	}
+
 }

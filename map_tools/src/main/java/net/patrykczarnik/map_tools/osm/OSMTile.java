@@ -1,5 +1,6 @@
 package net.patrykczarnik.map_tools.osm;
 
+import net.patrykczarnik.map_tools.graphic.PixelCoordinates;
 import net.patrykczarnik.map_tools.utils.MathUtils;
 
 /**
@@ -37,5 +38,14 @@ public class OSMTile {
 	@Override
 	public String toString() {
 		return "OSMTile scale="+scale+", point=(" + x +","+ y +")";
+	}
+
+	/** Returns absolute pixel coordinates of the top-left corner of this tile within the whole world map scaled in this tile scale.
+	 * @return the computed PixelCoordinates, never null
+	 */
+	public PixelCoordinates getAbsoluteCoordinates() {
+		final int pxX = OSMConstants.PIXELS_OF_TILE * x;
+		final int pxY = OSMConstants.PIXELS_OF_TILE * y;
+		return PixelCoordinates.of(pxX, pxY);
 	}
 }
