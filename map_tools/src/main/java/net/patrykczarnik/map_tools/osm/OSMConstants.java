@@ -13,8 +13,8 @@ public final class OSMConstants {
 	/** The number of bits for pixel coordinates in the maximum supported scale. */
 	static final int PIXELS_OF_WORLD_BITS = 31;
 
-	/** The number of bits for pixel coordinates in the maximum supported scale. */
-	static final long PIXELS_OF_WORLD = 1L << PIXELS_OF_WORLD_BITS;
+	/** The number of pixels in one dimension which a map of the whole world in the maximum supported scale would consist of. */
+	static final long PIXELS_OF_WORLD = 1L << PIXELS_OF_WORLD_BITS; // 2147483648
 
 	/** The number of bits which store the pixel coordinate within a tile. */
 	static final int PIXELS_OF_TILE_BITS = 8;

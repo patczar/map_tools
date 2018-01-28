@@ -10,7 +10,12 @@ import net.patrykczarnik.map_tools.utils.MathUtils;
  * the map scale, horizontal and vertical tile number (counted from 0).
  */
 public class OSMTile {
+	/** The scale of this tile. */
 	public final int scale;
+	
+	/** The horizontal and vertical coordinates of this tile within the whole world map.
+	 * The top-left tile has coordinates (0,0), the next tile on the right side of it (1,0) and so on.
+	 */
 	public final int x, y;
 
 	private OSMTile(int aScale, int x, int y) {
@@ -29,9 +34,9 @@ public class OSMTile {
 	 */
 	public static OSMTile ofCoordinates(int aScale, int x, int y) {
 		MathUtils.checkArgBetweenCC(aScale, 0, OSMConstants.MAX_SCALE, "incorrect scale " + aScale);
-		final int max = (1 << aScale) - 1;
-		MathUtils.checkArgBetweenCC(x, 0, max, "x (" + x + ") out of proper interval for the given scale");
-		MathUtils.checkArgBetweenCC(y, 0, max, "y (" + y + ") out of proper interval for the given scale");
+		final int max = (1 << aScale);
+		MathUtils.checkArgBetweenCO(x, 0, max, "x (" + x + ") out of proper interval for the given scale");
+		MathUtils.checkArgBetweenCO(y, 0, max, "y (" + y + ") out of proper interval for the given scale");
 		return new OSMTile(aScale, x, y);
 	}
 	
@@ -43,7 +48,7 @@ public class OSMTile {
 	/** Returns absolute pixel coordinates of the top-left corner of this tile within the whole world map scaled in this tile scale.
 	 * @return the computed PixelCoordinates, never null
 	 */
-	public PixelCoordinates getAbsoluteCoordinates() {
+	public PixelCoordinates getAbsolutePixelCoordinates() {
 		final int pxX = OSMConstants.PIXELS_OF_TILE * x;
 		final int pxY = OSMConstants.PIXELS_OF_TILE * y;
 		return PixelCoordinates.of(pxX, pxY);

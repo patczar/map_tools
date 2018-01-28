@@ -13,10 +13,10 @@ public final class MercatorProjection {
 	private MercatorProjection() {
 	}
 	
-	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. */
+	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. Expressed in radians. */
 	public static final double LATITUDE_RANGE_RADIANS =	Math.atan(Math.sinh(Math.PI));
 
-	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. */
+	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. Expressed in degrees. */
 	public static final double LATITUDE_RANGE_DEGREES = Math.nextDown(Math.toDegrees(LATITUDE_RANGE_RADIANS));
 	
 	/** Converts the latitude expressed in radians to the vertical coordinate in Mercator projection.
