@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 /**
  * @author Patryk Czarnik <patryk@patrykczarnik.net>
@@ -116,5 +117,12 @@ public class GeographicalPath implements Iterable<GeographicalCoordinates> {
 	 */
 	public ListIterator<GeographicalCoordinates> iterator() {
 		return this.getPoints().listIterator();
+	}
+
+	/**
+	 * @return an ordered stream of points from this path
+	 */
+	public Stream<GeographicalCoordinates> stream() {
+		return fPoints.stream();
 	}
 }
