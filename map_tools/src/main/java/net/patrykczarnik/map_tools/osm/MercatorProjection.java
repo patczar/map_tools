@@ -12,13 +12,13 @@ public final class MercatorProjection {
 	/** This class is not to be instantiated. */
 	private MercatorProjection() {
 	}
-	
+
 	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. Expressed in radians. */
-	public static final double LATITUDE_RANGE_RADIANS =	Math.atan(Math.sinh(Math.PI));
+	public static final double LATITUDE_RANGE_RADIANS = Math.atan(Math.sinh(Math.PI));
 
 	/** Maximum allowed absolute value of latitude so that the resulting projection fits within [-1, +1] interval. Expressed in degrees. */
 	public static final double LATITUDE_RANGE_DEGREES = Math.nextDown(Math.toDegrees(LATITUDE_RANGE_RADIANS));
-	
+
 	/** Converts the latitude expressed in radians to the vertical coordinate in Mercator projection.
 	 * 
 	 * The result is scaled so that 0 denotes the equator, positive values denotes the north semisphere and negative values the south semisphere.
@@ -30,7 +30,7 @@ public final class MercatorProjection {
 	public static double projectLatitude(double aLatitudeRad) {
 		return Math.log(Math.tan(Math.PI/4.0 + aLatitudeRad/2.0)) / Math.PI;
 	}
-	
+
 	/** Converts the longitude expressed in radians to the horizontal coordinate in Mercator projection.
 	 * 
 	 * The result is scaled so that 0 denotes the meridian zero (Greenwich), positive values denotes the east semisphere and negative values the west semisphere.

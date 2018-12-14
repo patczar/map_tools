@@ -14,6 +14,10 @@ import net.patrykczarnik.map_tools.graphic.PixelPath;
  * In particular convertions which are indirect or from other reasons should not be defined individually for particular objects.
  */
 public final class Convertions {
+	/** This class is not to be instantiated. */
+	private Convertions() {
+	}
+
 	/** Converts points specified with geographical coordinates into coordinates of pixels in a whole world map in the given scale. Stream version.
 	 * @param aStream the source of points
 	 * @param aScale the scale of the target map
@@ -36,10 +40,7 @@ public final class Convertions {
 	public static PixelPath geographicalPathToPixelPath(
 			final GeographicalPath aGeoPath,
 			final int aScale) {
-		Stream<PixelCoordinates> pixelStream = aGeoPath.stream()
-			.map(MercatorProjection::projectPoint01)
-			.map(OSMPoint::ofCenteredPoint)
-			.map(p -> p.getAbsoluteCoordinates(aScale));
+		Stream<PixelCoordinates> pixelStream = geographicalCoordinatesToPixelPointsStream(aGeoPath.stream(), aScale);
 		return PixelPath.of(pixelStream);
 	}
 }
