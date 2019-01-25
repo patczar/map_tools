@@ -50,4 +50,16 @@ public class OSMPoint01_Test {
 		assertThat(px2.x).isEqualTo(0);
 		assertThat(px2.y).isEqualTo(0);
 	}
+	
+	@Test
+	public void testofCenteredPoint() {
+		final OSMPoint point = OSMPoint.ofCenteredPoint(0.0, 0.0);
+		assertThat(point).isNotNull();
+		final OSMTile tile1 = point.getTile(1);
+		final PixelCoordinates px1 = point.getCoordinatesWithinTile(1);
+		assertThat(tile1.x).isEqualTo(1);
+		assertThat(tile1.y).isEqualTo(1);
+		assertThat(px1.x).isEqualTo(0);
+		assertThat(px1.y).isEqualTo(0);
+	}
 }
