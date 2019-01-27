@@ -24,8 +24,14 @@ public final class ImageTools {
 	}
 
 	public static void write(BufferedImage aImg, String aPath) throws IOException {
-		String formatName = aPath.substring(aPath.length() - 3);
+		final String formatName = aPath.substring(aPath.length() - 3);
 		ImageIO.write((RenderedImage) aImg, formatName, new File(aPath));
+	}
+
+	public static void write(BufferedImage aImg, File aFile) throws IOException {
+		final String fileName = aFile.getName();
+		final String formatName = fileName.substring(fileName.length() - 3);
+		ImageIO.write((RenderedImage) aImg, formatName, aFile);
 	}
 
 	public static BufferedImage copy(BufferedImage aImg) {
