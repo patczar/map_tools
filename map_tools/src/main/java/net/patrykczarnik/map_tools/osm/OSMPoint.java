@@ -80,6 +80,17 @@ public class OSMPoint {
 		return ofCenteredPoint(aPoint.x, aPoint.y);
 	}
 
+	/** Returns a OSMPoint being this point with both coordinates increased by one.
+	 * 
+	 * It may be useful to fulfill rectangle regions with the missing bottom-right corner
+	 * as most of this library APIs assume excluding the bottom-right coordinate.
+	 * 
+	 * @return a fresh object, never null
+	 */
+	public OSMPoint nextDiagonally() {
+		return new OSMPoint(x+1, y+1);
+	}
+	
 	/** Returns the tile which the point belongs to.
 	 * @param aScale the requested scale od the tile
 	 * @return an OSMTile object describing the map tile this point belongs to

@@ -7,16 +7,15 @@ import java.awt.image.BufferedImage;
 
 import net.patrykczarnik.map_tools.exn.FileProcessingException;
 import net.patrykczarnik.map_tools.exn.NoSuchTileException;
+import net.patrykczarnik.map_tools.osm.OSMPoint;
 import net.patrykczarnik.map_tools.osm.OSMTile;
 import net.patrykczarnik.map_tools.repository.FileTileProvider;
 import net.patrykczarnik.map_tools.repository.ITileProvider;
 
 public class MapImageCreator {
-	private final String fRepositoryPattern;
 	private final ITileProvider fTileProvider;
 
 	private MapImageCreator(String aRepositoryPattern, ITileProvider aTileProvider) {
-		fRepositoryPattern = aRepositoryPattern;
 		fTileProvider = aTileProvider;
 	}
 
@@ -42,5 +41,33 @@ public class MapImageCreator {
 		}
 		return image;
 	}
+	
+	public BufferedImage createImageForCorners(int aScale, OSMPoint aLeftTop, OSMPoint aRightBottom) throws NoSuchTileException, FileProcessingException {
+		return createImageForCorners(aScale, aLeftTop, aRightBottom, 0);
+	}
 
+	/** Generates map of the specified area.
+	 * This version accepts the coordinates as OSMPoint, that is as pixels of the virtual whole world map in the highest scale.
+	 * It also allows to specify an additional margin around the area.
+	 * 
+	 * @param aScale the scale of the requested map
+	 * @param aLeftTop the left-top corner (included in whe result)
+	 * @param aRightBottom the right-bottom corner (excluded from the map)
+	 * @param aMargin margin around the requested area specified in pixels of the result image
+	 * @return an image representing the requested map fragment
+	 * @throws NoSuchTileException
+	 * @throws FileProcessingException
+	 */
+	public BufferedImage createImageForCorners(int aScale, OSMPoint aLeftTop, OSMPoint aRightBottom, int aMargin) throws NoSuchTileException, FileProcessingException {
+		//FIXME margin not supported yet
+		OSMTile ltTile = aLeftTop.getTile(aScale);
+		OSMTile rbTile = aRightBottom.getTile(aScale);
+		PixelCoordinates ltOffset = aLeftTop.getCoordinatesRelativeToTile(ltTile);
+		PixelCoordinates rbOffset = aRightBottom.getCoordinatesRelativeToTile(ltTile);
+		
+		BufferedImage image = createImageFromTiles(aScale, ltTile.x, rbTile.x+1, ltTile.y, rbTile.y+1);
+		image = ImageTools.cropCopy(image, ltOffset.x, ltOffset.y, rbOffset.x - ltOffset.x, rbOffset.y - ltOffset.y);
+		return image;
+	}
+	
 }
