@@ -12,16 +12,21 @@ import net.patrykczarnik.map_tools.osm.OSMTile;
 import net.patrykczarnik.map_tools.repository.FileTileProvider;
 import net.patrykczarnik.map_tools.repository.ITileProvider;
 
+/**
+ * @author Patryk Czarnik <patryk@patrykczarnik.net>
+ *
+ * Object of this class is able to create map images.
+ */
 public class MapImageCreator {
 	private final ITileProvider fTileProvider;
 
-	private MapImageCreator(String aRepositoryPattern, ITileProvider aTileProvider) {
+	private MapImageCreator(ITileProvider aTileProvider) {
 		fTileProvider = aTileProvider;
 	}
 
 	public static MapImageCreator forRepositoryPattern(String aRepositoryPattern) {
 		ITileProvider tileProvider = FileTileProvider.withPathPattern(aRepositoryPattern);
-		return new MapImageCreator(aRepositoryPattern, tileProvider);
+		return new MapImageCreator(tileProvider);
 	}
 
 	public BufferedImage createImageFromTiles(int aScale, int x1, int x2, int y1, int y2) throws NoSuchTileException, FileProcessingException {
@@ -42,8 +47,18 @@ public class MapImageCreator {
 		return image;
 	}
 	
+	/** Generates map of the specified area.
+	 *  Equivalent to {@link MapImageCreator#createImageForCorners(int, OSMPoint, OSMPoint, int)} with <code>aMargin</code> equal 0. 
+	 */
 	public BufferedImage createImageForCorners(int aScale, OSMPoint aLeftTop, OSMPoint aRightBottom) throws NoSuchTileException, FileProcessingException {
-		return createImageForCorners(aScale, aLeftTop, aRightBottom, 0);
+		OSMTile ltTile = aLeftTop.getTile(aScale);
+		OSMTile rbTile = aRightBottom.getTile(aScale);
+		PixelCoordinates ltOffset = aLeftTop.getCoordinatesRelativeToTile(ltTile);
+		PixelCoordinates rbOffset = aRightBottom.getCoordinatesRelativeToTile(ltTile);
+		
+		BufferedImage image = createImageFromTiles(aScale, ltTile.x, rbTile.x+1, ltTile.y, rbTile.y+1);
+		image = image.getSubimage(ltOffset.x, ltOffset.y, rbOffset.x - ltOffset.x, rbOffset.y - ltOffset.y);
+		return image;
 	}
 
 	/** Generates map of the specified area.
@@ -59,15 +74,9 @@ public class MapImageCreator {
 	 * @throws FileProcessingException
 	 */
 	public BufferedImage createImageForCorners(int aScale, OSMPoint aLeftTop, OSMPoint aRightBottom, int aMargin) throws NoSuchTileException, FileProcessingException {
-		//FIXME margin not supported yet
-		OSMTile ltTile = aLeftTop.getTile(aScale);
-		OSMTile rbTile = aRightBottom.getTile(aScale);
-		PixelCoordinates ltOffset = aLeftTop.getCoordinatesRelativeToTile(ltTile);
-		PixelCoordinates rbOffset = aRightBottom.getCoordinatesRelativeToTile(ltTile);
-		
-		BufferedImage image = createImageFromTiles(aScale, ltTile.x, rbTile.x+1, ltTile.y, rbTile.y+1);
-		image = ImageTools.cropCopy(image, ltOffset.x, ltOffset.y, rbOffset.x - ltOffset.x, rbOffset.y - ltOffset.y);
-		return image;
+		return createImageForCorners(aScale,
+				aLeftTop.movedInScale(-aMargin, -aMargin, aScale),
+				aRightBottom.movedInScale(aMargin, aMargin, aScale));
 	}
 	
 }

@@ -80,6 +80,16 @@ public class OSMPoint {
 		return ofCenteredPoint(aPoint.x, aPoint.y);
 	}
 
+	/** Returns a OSMPoint being this point moved according to the given vector.
+	 * 
+	 *  @param x the horizontal component of the move vector
+	 *  @param y the vertical component of the move vector
+	 * 
+	 * @return a fresh object, never null
+	 */	public OSMPoint moved(int x, int y) {
+		return new OSMPoint(this.x + x, this.y + y);
+	}
+	
 	/** Returns a OSMPoint being this point with both coordinates increased by one.
 	 * 
 	 * It may be useful to fulfill rectangle regions with the missing bottom-right corner
@@ -88,7 +98,21 @@ public class OSMPoint {
 	 * @return a fresh object, never null
 	 */
 	public OSMPoint nextDiagonally() {
-		return new OSMPoint(x+1, y+1);
+		return this.moved(1, 1);
+	}
+	
+	/** Returns a OSMPoint being this point moved according to the given change.
+	 * The move is expressend in pixels in the given map scale.
+	 * 
+	 *  @param x the horizontal component of the move vector
+	 *  @param y the vertical component of the move vector
+	 *  @param aScale the scale of the map in which the move is expressed
+	 * 
+	 * @return a fresh object, never null
+	 */
+	public OSMPoint movedInScale(int x, int y, int aScale) {
+		final int shift = MAX_SCALE - aScale;
+		return this.moved(x << shift, y << shift);
 	}
 	
 	/** Returns the tile which the point belongs to.
