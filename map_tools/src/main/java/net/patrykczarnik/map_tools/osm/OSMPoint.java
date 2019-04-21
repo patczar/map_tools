@@ -82,12 +82,13 @@ public class OSMPoint {
 
 	/** Returns a OSMPoint being this point moved according to the given vector.
 	 * 
-	 *  @param x the horizontal component of the move vector
-	 *  @param y the vertical component of the move vector
+	 *  @param dx the horizontal component of the move vector
+	 *  @param dy the vertical component of the move vector
 	 * 
 	 * @return a fresh object, never null
-	 */	public OSMPoint moved(int x, int y) {
-		return new OSMPoint(this.x + x, this.y + y);
+	 */
+	public OSMPoint moved(int dx, int dy) {
+		return new OSMPoint(this.x + dx, this.y + dy);
 	}
 	
 	/** Returns a OSMPoint being this point with both coordinates increased by one.
@@ -104,15 +105,15 @@ public class OSMPoint {
 	/** Returns a OSMPoint being this point moved according to the given change.
 	 * The move is expressend in pixels in the given map scale.
 	 * 
-	 *  @param x the horizontal component of the move vector
-	 *  @param y the vertical component of the move vector
+	 *  @param dx the horizontal component of the move vector
+	 *  @param dy the vertical component of the move vector
 	 *  @param aScale the scale of the map in which the move is expressed
 	 * 
 	 * @return a fresh object, never null
 	 */
-	public OSMPoint movedInScale(int x, int y, int aScale) {
+	public OSMPoint movedInScale(int dx, int dy, int aScale) {
 		final int shift = MAX_SCALE - aScale;
-		return this.moved(x << shift, y << shift);
+		return this.moved(dx << shift, dy << shift);
 	}
 	
 	/** Returns the tile which the point belongs to.

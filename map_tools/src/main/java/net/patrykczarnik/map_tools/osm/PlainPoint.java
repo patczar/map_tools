@@ -52,7 +52,7 @@ public class PlainPoint {
 
 	/** Returns this point (as a new instance) scaled with 2 to the given exponent.
 	 * 
-	 * This methd offers better presicion than @see #scaled(double).
+	 * This method offers better presicion than @see #scaled(double).
 	 * 
 	 * @param aScaleExp the exponent of 2, by which the scale will be changed; can be positive or negative,
 	 * @return a fresh PlainPoint object with coordinates multiplied by 2^aScaleExp; never null

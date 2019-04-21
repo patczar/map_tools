@@ -1,5 +1,6 @@
 package net.patrykczarnik.map_tools.graphic;
 
+import java.awt.Point;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,5 +45,12 @@ public class PixelPath {
 	@Override
 	public String toString() {
 		return fPixels.toString();
+	}
+
+	public List<Point> getPoints() {
+		
+		return fPixels.stream()
+			.map(PixelCoordinates::toAwtPoint)
+			.collect(Collectors.toList());
 	}
 }

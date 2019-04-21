@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -25,13 +24,13 @@ public final class ImageTools {
 
 	public static void write(BufferedImage aImg, String aPath) throws IOException {
 		final String formatName = aPath.substring(aPath.length() - 3);
-		ImageIO.write((RenderedImage) aImg, formatName, new File(aPath));
+		ImageIO.write(aImg, formatName, new File(aPath));
 	}
 
 	public static void write(BufferedImage aImg, File aFile) throws IOException {
 		final String fileName = aFile.getName();
 		final String formatName = fileName.substring(fileName.length() - 3);
-		ImageIO.write((RenderedImage) aImg, formatName, aFile);
+		ImageIO.write(aImg, formatName, aFile);
 	}
 
 	public static BufferedImage copy(BufferedImage aImg) {

@@ -1,5 +1,7 @@
 package net.patrykczarnik.map_tools.graphic;
 
+import java.awt.Point;
+
 import net.patrykczarnik.map_tools.osm.OSMPoint;
 import net.patrykczarnik.map_tools.utils.MathUtils;
 
@@ -58,6 +60,10 @@ public class PixelCoordinates {
 	 */
 	public PixelCoordinates relativize(PixelCoordinates aOther) {
 		return new PixelCoordinates(this.x - aOther.x, this.y - aOther.y);
+	}
+	
+	public Point toAwtPoint() {
+		return new Point(x, y);
 	}
 
 }
