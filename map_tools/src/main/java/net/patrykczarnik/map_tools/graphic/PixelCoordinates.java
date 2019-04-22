@@ -28,7 +28,7 @@ public class PixelCoordinates {
 	 */
 	public static PixelCoordinates of(int x, int y) throws IllegalArgumentException {
 		MathUtils.checkArgNonNegative(x, "Negative pixel x coordinate " + x);
-		MathUtils.checkArgNonNegative(x, "Negative pixel y coordinate " + y);
+		MathUtils.checkArgNonNegative(y, "Negative pixel y coordinate " + y);
 		return new PixelCoordinates(x, y);
 	}
 
@@ -51,6 +51,11 @@ public class PixelCoordinates {
 		if (y != other.y)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "("+x+","+y+")";
 	}
 
 	/** Returns the coordinates of this object relative to the parameter.

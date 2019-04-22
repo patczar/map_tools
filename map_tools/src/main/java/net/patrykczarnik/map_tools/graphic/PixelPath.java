@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,9 +49,30 @@ public class PixelPath {
 	}
 
 	public List<Point> getPoints() {
-		
 		return fPixels.stream()
 			.map(PixelCoordinates::toAwtPoint)
 			.collect(Collectors.toList());
+	}
+
+	public PixelBounds getBounds() {
+		if(fPixels.isEmpty()) {
+			throw new NoSuchElementException("Empty path has no bounds.");
+		}
+		int minX = Integer.MAX_VALUE;
+		int minY = Integer.MAX_VALUE;
+		int maxX = Integer.MIN_VALUE;
+		int maxY = Integer.MIN_VALUE;
+		
+		for(PixelCoordinates p : fPixels) {
+			if(p.x < minX)
+				minX = p.x;
+			if(p.x > maxX)
+				maxX = p.x;
+			if(p.y < minY)
+				minY = p.y;
+			if(p.y > maxY)
+				maxY = p.y;
+		}
+		return PixelBounds.of(minX, maxX, minY, maxY);
 	}
 }

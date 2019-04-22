@@ -86,4 +86,33 @@ public final class MathUtils {
 			throw new IllegalArgumentException(aMessage);
 		}
 	}
+
+	/** Chcecks whether one number is strictly less that the other.
+	 * If the condition holds, nothing happens.
+	 * If the condition is not met, then an IllegalArgumentException is thrown.
+	 */
+	public static void checkLT(int aLeft, int aRight, String aMessage) throws IllegalArgumentException {
+		if(aLeft >= aRight) {
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
+
+	public static void checkLT(int aLeft, int aRight) throws IllegalArgumentException {
+		checkLT(aLeft, aRight, "Number " + aLeft + " is not less than " + aRight);
+	}
+
+	/** Chcecks whether one number is less that or equals to the other.
+	 * If the condition holds, nothing happens.
+	 * If the condition is not met, then an IllegalArgumentException is thrown.
+	 */
+	public static void checkLE(int aLeft, int aRight, String aMessage) throws IllegalArgumentException {
+		if(aLeft > aRight) {
+			throw new IllegalArgumentException(aMessage);
+		}
+	}
+
+	public static void checkLE(int aLeft, int aRight) throws IllegalArgumentException {
+		checkLE(aLeft, aRight, "Number " + aLeft + " is greater than " + aRight);
+	}
+
 }
