@@ -59,14 +59,14 @@ public class OSMPoint {
 	
 	/** Creates an OSMPoint of fractional coordinates scaled in the range of [-1, +1] in each dimension.
 	 * (0,0) is the center of the whole map
-	 * @param x the horizontal coordinate; a number between -1.0 and +1.0 (exclusive)
-	 * @param y the vertical coordinate; a number between  -1.0 and +1.0 (exclusive)
+	 * @param x the horizontal coordinate; a number between -1.0 and +1.0 (exclusive); negative numbers denote the west semisphere and positive numbers the east semisphere
+	 * @param y the vertical coordinate; a number between  -1.0 and +1.0 (exclusive); negative numbers denote the south semisphere and positive numbers the north semisphere
 	 * @return a fresh object, never null
 	 * @throws IllegalArgumentException if any argument is out of the range
 	 */
 	public static OSMPoint ofCenteredPoint(double x, double y) {
-		x = (x + 1.0) / 2.0;
-		y = (y + 1.0) / 2.0;
+		x = (1.0 + x) / 2.0;
+		y = (1.0 - y) / 2.0;
 		return of01Point(x, y);
 	}
 	
