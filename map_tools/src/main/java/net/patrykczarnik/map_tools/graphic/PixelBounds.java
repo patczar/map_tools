@@ -10,7 +10,7 @@ import net.patrykczarnik.map_tools.utils.MathUtils;
  *
  * An object of this class contains four numbers which usually denote extreme coordinates of a set of points.
  * 
- * This class is immutable.
+ * This class is immutable and implements value object principle.
  */
 public class PixelBounds {
 	public final int minX, maxX, minY, maxY;
@@ -81,6 +81,13 @@ public class PixelBounds {
 
 	public int getHeight() {
 		return maxY - minY;
+	}
+	
+	public PixelBounds withMargin(int aMargin) {
+		if(aMargin == 0) {
+			return this;
+		}
+		return PixelBounds.of(minX - aMargin, maxX + aMargin, minY - aMargin, maxY + aMargin);
 	}
 	
 	public Rectangle toAwtRectangle() {

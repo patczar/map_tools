@@ -46,9 +46,8 @@ public class PathImageCreator {
 		}
 	}
 
-	public BufferedImage drawEmpty(PixelPath aPath) {
-		PixelBounds bounds = aPath.getBounds();
-		System.out.println("bounds: " + bounds);
+	public BufferedImage drawEmpty(PixelPath aPath, int aMargin) {
+		PixelBounds bounds = aPath.getBounds().withMargin(aMargin);
 		BufferedImage img = new BufferedImage(bounds.getWidth(), bounds.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = img.createGraphics();
 		try {

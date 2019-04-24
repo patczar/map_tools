@@ -3,18 +3,27 @@ package net.patrykczarnik.map_tools.programs;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import net.patrykczarnik.map_tools.geo.GeographicalCoordinates;
 import net.patrykczarnik.map_tools.geo.GeographicalPath;
 import net.patrykczarnik.map_tools.gps.GpxReader;
 import net.patrykczarnik.map_tools.graphic.ImageTools;
+import net.patrykczarnik.map_tools.graphic.MapImageCreator;
 import net.patrykczarnik.map_tools.graphic.PathImageCreator;
 import net.patrykczarnik.map_tools.graphic.PixelPath;
 import net.patrykczarnik.map_tools.osm.Convertions;
+import net.patrykczarnik.map_tools.osm.MercatorProjection;
+import net.patrykczarnik.map_tools.osm.OSMArea;
+import net.patrykczarnik.map_tools.osm.OSMPath;
+import net.patrykczarnik.map_tools.osm.OSMPoint;
+import net.patrykczarnik.map_tools.osm.OSMTileSet;
 
 /**
  * @author Patryk Czarnik <patryk@patrykczarnik.net>
  *
  */
-public class DrawClearPath {
+public class DrawTrack {
+	private static final String DEFAULT_REPOSITORY_PATTERN = "/home/patryk/osm/Polska/tile%02d_%04d_%04d.png";
+
 	public static void main(String[] args) {
 		if(args.length < 3) {
 			printUsage();
@@ -26,15 +35,24 @@ public class DrawClearPath {
 			String gpxFile = args[1];
 			File file = new File(args[2]);
 			int margin = args.length >= 4 ? Integer.parseInt(args[3]) : 0;
+			String repositoryPattern = args.length >= 5 ? args[4] : DEFAULT_REPOSITORY_PATTERN;
 			
 			System.out.println("Processing...");
+			
 			GeographicalPath geoPath = GpxReader.readGpsPath(gpxFile);
 			System.out.println(geoPath);
-			PixelPath pixelPath = Convertions.geographicalPathToPixelPath(geoPath, scale);
+
+			OSMPath osmPath = OSMPath.of(geoPath);
+			OSMArea area = osmPath.getContainingArea();
+			OSMTileSet tileSet = area.getTileSet(scale);
+			PixelPath pixelPath = tileSet.pixelPathFromOSMPath(osmPath);
 			System.out.println(pixelPath);
 			
+			MapImageCreator mapImageCreator = MapImageCreator.forRepositoryPattern(repositoryPattern);
+			BufferedImage image = mapImageCreator.createImageForCorners(scale, area.getLTCorner(), area.getRBCorner(), margin);
+
 			PathImageCreator pathImageCreator = PathImageCreator.withDefaultSettings();
-			BufferedImage image = pathImageCreator.drawEmpty(pixelPath, margin);
+			pathImageCreator.drawOver(image, pixelPath);
 			ImageTools.write(image, file);
 			System.out.println("Wrote the map image to " + file);
 		} catch(NumberFormatException e) {
@@ -49,11 +67,12 @@ public class DrawClearPath {
 
 	private static void printUsage() {
 		final String usage = "Usage:\n"
-				+ "java DrawClearTrack scale track.gpx file.png [margin] [repository_path]\n"
+				+ "java DrawTrack scale track.gpx file.png [margin] [repository_path]\n"
 				+ " * scale - OSM map scale\n"
 				+ " * track.gpx - the file with the GPS track to draw\n"
 				+ " * file.png - output file name (or path)\n"
-				+ " * margin - number of additional pixel around the area\n";
+				+ " * margin - number of additional pixel around the area\n"
+				+ " * repository_path - pattern for stored tile files, e.g. /osm/tile%02d_%04d_%04d.png\n";
 		System.out.print(usage);
 	}
 
